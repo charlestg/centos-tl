@@ -12,9 +12,9 @@ ENV TL install-tl
 RUN mkdir -p $TL
 RUN wget -nv -O $TL.tar.gz http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 RUN tar -xzf $TL.tar.gz -C $TL --strip-components=1
-RUN cd $TL/ && ./install-tl --persistent-downloads
-ENV PATH $PATH:/usr/local/texlive/2014/bin/x86_64-linux
-# cleanup
-RUN rm $TL.tar.gz && rm -r $TL
-
+ADD texlive.profile $TL/
+RUN cd $TL/ && ./install-tl --profile texlive.profile
 ENV PATH $PATH:/usr/local/texlive/2017/bin/x86_64-linux
+# cleanup
+#RUN rm $TL.tar.gz && rm -r $TL
+
